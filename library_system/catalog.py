@@ -55,9 +55,10 @@ def find_books_by_genre(books: List[Dict[str, Any]], genre: str) -> List[Dict[st
 
     # BUG #1A: Exact match fails when user searches with lowercase or uppercase!
     # Expected: compare normalized strings using .lower()
+    genre = genre.strip().lower()
     return [
         book for book in books
-        if genre in book.get("genres", [])
+        if genre in [g.lower() for g in book.get("genres", [])]
     ]
 
 
@@ -78,10 +79,9 @@ def find_books_by_author(books: List[Dict[str, Any]], author_query: str) -> List
 def calculate_average_year(books: List[Dict[str, Any]]) -> float:
     """
     Calculate the average publication year of books in the catalog.
-
-    TODO (Dev 1): Fix division and empty list handling!
-    Currently uses integer division '//' and does not handle empty list safely.
     """
-    # BUG #1B: Missing empty check crashes, and integer division loses precision!
+    if not books:
+        return 0.0
+
     total_years = sum(book.get("year", 0) for book in books)
-    return total_years // len(books)
+    return total_years / len(books)
