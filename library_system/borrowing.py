@@ -38,6 +38,7 @@ def checkout_book(
         raise ValueError(f"Book '{target_book.get('title')}' (ID: {book_id}) is currently unavailable")
 
     # BUG #3: Forgot to toggle target_book["is_available"] = False!
+    target_book["is_available"] = False
     target_book["borrower"] = borrower_name.strip()
 
     return {
