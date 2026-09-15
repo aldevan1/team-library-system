@@ -56,6 +56,7 @@ def find_books_by_genre(books: List[Dict[str, Any]], genre: str) -> List[Dict[st
     # BUG #1A: Exact match fails when user searches with lowercase or uppercase!
     # Expected: compare normalized strings using .lower()
     genre = genre.strip().lower()
+    
     return [
         book for book in books
         if genre in [g.lower() for g in book.get("genres", [])]
